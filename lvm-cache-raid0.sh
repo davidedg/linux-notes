@@ -89,6 +89,7 @@ lvs --all --options +devices
 
 # Create FS
 mkfs.xfs -K /dev/vg-data/data
+
 			meta-data=/dev/vg-data/data      isize=512    agcount=32, agsize=76300288 blks
 					 =                       sectsz=4096  attr=2, projid32bit=1
 					 =                       crc=1        finobt=1, sparse=1, rmapbt=0
