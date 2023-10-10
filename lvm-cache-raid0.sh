@@ -37,8 +37,8 @@ lvcreate -n ssdcachemeta --type raid0  --stripes 3 --stripesize 4 -l $CACHEMETAS
 
 
 # SSD raid 0 cache - pick a size that will fit all the 3 ssd devices
-CACHEMINSIZE=$( pvdisplay /dev/nvme0n1p2 /dev/sda /dev/sdb | grep  "Free PE" | awk '{print $3}' | awk 'NR == 1 || $3 < min {line = $0; min = $3}END{print line}' )
-CACHESIZE=`expr 3 \* $CACHEMINSIZE - 512`  # 3 = num of devices - 512 ... or it kept saying no free ext...
+CACHEMINSIZE=$( pvdisplay /dev/nvme0n1p2 /dev/sda /dev/sdb | grep  "Free PE" | awk '{print $3}' | sort -k3,3n | head -1 )
+CACHESIZE=`expr 3 \* $CACHEMINSIZE`  # 3 = num of devices
 lvcreate -n ssdcache     --type raid0  --stripes 3 --stripesize 4 -l $CACHESIZE  vg-data /dev/nvme0n1p2 /dev/sda /dev/sdb
 
 
