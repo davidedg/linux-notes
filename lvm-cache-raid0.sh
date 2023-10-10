@@ -2,6 +2,12 @@
 # Notes on creating a dm-cache volume
 ##########################################################
 
+# install LVM + thin-provisioning-tools (required for /usr/sbin/cache_check binary)
+apt install lvm2 thin-provisioning-tools
+
+
+
+
 lsblk
 		NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
 		sda           8:0    0 447.1G  0 disk	<<< SSD
@@ -95,7 +101,9 @@ mkfs.xfs -K /dev/vg-data/data
 			realtime =none                   extsz=4096   blocks=0, rtextents=0
 
 
+# Set vg to auto-activate
+vgchange -ay vg-data
+
 
 # Append to /etc/fstab (defaults includes nodiscard)
-/dev/vg-data/data /mnt/data xfs defaults 0 0
-
+/dev/vg-data/data /mnt/data xfs defaults,nofail 0 0
