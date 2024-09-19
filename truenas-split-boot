@@ -1,0 +1,2 @@
+#!/bin/bash
+sed -i 's/sgdisk -n3:0:0/sgdisk -n3:0:+20480M/g' /usr/sbin/truenas-install
